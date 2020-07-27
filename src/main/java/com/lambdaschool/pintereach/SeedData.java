@@ -7,9 +7,11 @@ import com.lambdaschool.pintereach.services.ArticleService;
 import com.lambdaschool.pintereach.services.CategoryService;
 import com.lambdaschool.pintereach.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 public class SeedData
+        implements CommandLineRunner
 {/**
  * Connects the Article Service to this process
  */
@@ -96,11 +98,11 @@ ArticleService articleService;
          ************/
 
 
-        Category c1 = new Category("Fiction");
-        Category c2 = new Category("Technology");
-        Category c3 = new Category("Travel");
-        Category c4 = new Category("Business");
-        Category c5 = new Category("Religion");
+        Category c1 = new Category("Biology", u1);
+        Category c2 = new Category("Physics",u2);
+        Category c3 = new Category("English",u3);
+        Category c4 = new Category("History",u4);
+        Category c5 = new Category("Political Science",u7 );
 
         c1 = categoryService.save(c1);
         c2 = categoryService.save(c2);
@@ -108,32 +110,22 @@ ArticleService articleService;
         c4 = categoryService.save(c4);
         c5 = categoryService.save(c5);
 
-        Article a1 = new Book("Test Flatterland", "9780738206752", 2001, s1);
-        b1.getWrotes()
-                .add(new Wrote(a6, new Book()));
-        b1 = bookService.save(b1);
+        Article a1 = new Article("https://www.jstor.org/stable/j.ctvbkk2pq.17", "The Future of Public History – What Shall We Teach Prospectively?: Remarks and Considerations\n" +
+                "By Charlotte Bühl-Gramer", c4, "Talks about the future of public history");
+        a1 = articleService.save(a1);
 
-        Book b2 = new Book("Test Digital Fortess", "9788489367012", 2007, s1);
-        b2.getWrotes()
-                .add(new Wrote(a2, new Book()));
-        b2 = bookService.save(b2);
+        Article a2 = new Article("https://www.jstor.org/stable/10.1641/b570903", "Evolutionary Biology and Human Health\n" +
+                "By Cheryl Lyn Dybas", c1, "Talks about Evolutionary Biology");
 
-        Book b3 = new Book("Test The Da Vinci Code", "9780307474278", 2009, s1);
-        b3.getWrotes()
-                .add(new Wrote(a2, new Book()));
-        b3 = bookService.save(b3);
+        Article a3 = new Article("https://www.jstor.org/stable/10.21832/j.ctt1xp3wcc.15", "11 Variation or ‘Error’?: Perception of Pronunciation Variation and Implications for Assessment\n" +
+                "Stephanie Lindemann", c3, "Talks about variations in the English language");
 
-        Book b4 = new Book("Test Essentials of Finance", "1314241651234", 0, s4);
-        b4.getWrotes()
-                .add(new Wrote(a3, new Book()));
-        b4.getWrotes()
-                .add(new Wrote(a5, new Book()));
-        b4 = bookService.save(b4);
+        Article a4 = new Article("https://www.jstor.org/stable/24917409", "Particle physics in a superconductor\n" +
+                "Alexej Pashkin and Alfred Leitenstorfer", c2, "Talks about Particle Physics");
 
-        Book b5 = new Book("Test Calling Texas Home", "1885171382134", 2000, s3);
-        b5.getWrotes()
-                .add(new Wrote(a4, new Book()));
-        b5 = bookService.save(b5);
+        Article a5 = new Article("https://www.jstor.org/stable/2140885", "The Political Theories of Jean Jacques Rousseau\n" +
+                "Wm. A. Dunning", c5, "Talks about the Rousseau's political theories");
+
 
 //        System.out.println("***** BOOK IDs *****");
 //        System.out.println(b1.getTitle() + " " + b1.getBookid());

@@ -1,39 +1,52 @@
 package com.lambdaschool.pintereach.services;
 
+import com.lambdaschool.pintereach.models.Article;
+import com.lambdaschool.pintereach.models.Category;
+import com.lambdaschool.pintereach.repositories.ArticleRepository;
+import com.lambdaschool.pintereach.repositories.CategoryRepository;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
+@Service("categoryService")
 public class CategoryServiceImpl
+        implements CategoryService
 {
     @Autowired
     UserAuditing userAuditing;
 
     @Autowired
-    BookRepository bookrepos;
+    CategoryRepository categoryrepos;
 
     @Autowired
-    SectionService sectionService;
+    ArticleService articleService;
 
     @Autowired
-    AuthorRepository authorrepos;
+    CategoryService categoryService;
+
+
+
+
 
     @Override
-    public List<Book> findAll()
+    public List<Category> findAll()
     {
-        List<Book> list = new ArrayList<>();
-        bookrepos.findAll()
+        List<Category> list = new ArrayList<>();
+        categoryrepos.findAll()
                 .iterator()
                 .forEachRemaining(list::add);
         return list;
     }
 
     @Override
-    public Book findBookById(long id)
+    public Category findCategoryById(long id)
     {
-        return bookrepos.findById(id)
+        return categoryrepos.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book with id " + id + " Not Found!"));
     }
 
@@ -42,10 +55,10 @@ public class CategoryServiceImpl
     @Override
     public void delete(long id)
     {
-        if (bookrepos.findById(id)
+        if (categoryrepos.findById(id)
                 .isPresent())
         {
-            bookrepos.deleteById(id);
+            categoryrepos.deleteById(id);
         } else
         {
             throw new ResourceNotFoundException("Book with id " + id + " Not Found!");
@@ -54,90 +67,59 @@ public class CategoryServiceImpl
 
     @Transactional
     @Override
-    public Book save(Book book)
+    public Category save(Category category)
     {
-        Book newBook = new Book();
+        Category newCategory = new Category();
 
-        if (book.getBookid() != 0)
+        if (category.getCategoryid() != 0)
         {
-            bookrepos.findById(book.getBookid())
-                    .orElseThrow(() -> new ResourceNotFoundException("Book id " + book.getBookid() + " not found!"));
+            categoryrepos.findById(category.getCategoryid())
+                    .orElseThrow(() -> new ResourceNotFoundException("Book id " + category.getCategoryid() + " not found!"));
         }
 
-        newBook.setTitle(book.getTitle());
-        newBook.setIsbn(book.getIsbn());
-        newBook.setCopy(book.getCopy());
-        if (book.getSection() != null)
-        {
-            newBook.setSection(sectionService.findSectionById(book.getSection()
-                    .getSectionid()));
-        }
+        newCategory.setCategoryName(category.getCategoryName());
 
-        newBook.getWrotes()
-                .clear();
-        for (Wrote w : book.getWrotes())
-        {
-            Author addAuthor = authorrepos.findById(w.getAuthor()
-                    .getAuthorid())
-                    .orElseThrow(() -> new ResourceNotFoundException("Author Id " + w.getAuthor()
-                            .getAuthorid() + " Not Found!"));
-            newBook.getWrotes()
-                    .add(new Wrote(addAuthor, newBook));
-        }
-        return bookrepos.save(newBook);
+
+        //if (category.getCategoryName() != null)
+        //{
+            //newCategory.setCategoryid(categoryService.findSectionById(category.getSection()
+                    //.getSectionid()));
+        //}
+
+
+        return categoryrepos.save(newCategory);
     }
 
     @Transactional
     @Override
-    public Book update(Book book,
+    public Category update(Category category,
                        long id)
     {
-        Book currentBook = findBookById(id);
+        Category currentCategory = findCategoryById(id);
 
-        if (book.getTitle() != null)
+        if (category.getCategoryName() != null)
         {
-            currentBook.setTitle(book.getTitle());
+            currentCategory.setCategoryName(category.getCategoryName());
         }
 
-        if (book.getIsbn() != null)
-        {
-            currentBook.setIsbn(book.getIsbn());
-        }
 
-        if (book.hasvalueforcopy)
-        {
-            currentBook.setCopy(book.getCopy());
-        }
 
-        if (book.getSection() != null)
-        {
-            currentBook.setSection(sectionService.findSectionById(book.getSection()
-                    .getSectionid()));
-        }
+        //if (category.getCategoryName() != null)
+        //{
+            //currentBook.setSection(sectionService.findSectionById(book.getSection()
+                    //.getSectionid()));
+        //}
 
-        if (book.getWrotes()
-                .size() > 0)
-        {
-            currentBook.getWrotes()
-                    .clear();
-            for (Wrote w : book.getWrotes())
-            {
-                Author addAuthor = authorrepos.findById(w.getAuthor()
-                        .getAuthorid())
-                        .orElseThrow(() -> new ResourceNotFoundException("Author Id " + w.getAuthor()
-                                .getAuthorid() + " Not Found!"));
-                currentBook.getWrotes()
-                        .add(new Wrote(addAuthor, currentBook));
-            }
-        }
 
-        return bookrepos.save(currentBook);
+
+
+        return categoryrepos.save(currentCategory);
     }
 
     @Transactional
     @Override
     public void deleteAll()
     {
-        bookrepos.deleteAll();
+        categoryrepos.deleteAll();
     }
 }

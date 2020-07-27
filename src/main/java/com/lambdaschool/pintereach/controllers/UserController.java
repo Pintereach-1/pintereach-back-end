@@ -1,5 +1,6 @@
 package com.lambdaschool.pintereach.controllers;
 
+import com.lambdaschool.pintereach.models.User;
 import com.lambdaschool.pintereach.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -42,17 +43,17 @@ public class UserController
      * Returns a single user based off a user id number
      * <br>Example: http://localhost:2019/users/user/7
      *
-     * @param userId The primary key of the user you seek
+     * @param userid The primary key of the user you seek
      * @return JSON object of the user you seek
      * @see UserService#findUserById(long) UserService.findUserById(long)
      */
-    @GetMapping(value = "/user/{userId}",
+    @GetMapping(value = "/user/{userid}",
             produces = "application/json")
     public ResponseEntity<?> getUserById(
             @PathVariable
-                    Long userId)
+                    Long userid)
     {
-        User u = userService.findUserById(userId);
+        User u = userService.findUserById(userid);
         return new ResponseEntity<>(u,
                 HttpStatus.OK);
     }
@@ -114,14 +115,14 @@ public class UserController
                     User newuser) throws
             URISyntaxException
     {
-        newuser.setUserid(0);
+        newuser.setUserId(0);
         newuser = userService.save(newuser);
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{userid}")
-                .buildAndExpand(newuser.getUserid())
+                .buildAndExpand(newuser.getUserId())
                 .toUri();
         responseHeaders.setLocation(newUserURI);
 
@@ -152,7 +153,7 @@ public class UserController
             @PathVariable
                     long userid)
     {
-        updateUser.setUserid(userid);
+        updateUser.setUserId(userid);
         userService.save(updateUser);
 
         return new ResponseEntity<>(HttpStatus.OK);

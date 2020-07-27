@@ -1,9 +1,11 @@
 package com.lambdaschool.pintereach.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -11,11 +13,17 @@ public class User
 {
     @Id
     @GeneratedValue
-    private long userId;
+    private long userid;
 
     private String username;
 
     private String password;
+
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user", allowSetters = true)
+    private List<Category> categories = new ArrayList<>();
 
 
 
@@ -30,11 +38,11 @@ public class User
     }
 
     public long getUserId() {
-        return userId;
+        return userid;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUserId(long userid) {
+        this.userid = userid;
     }
 
     public String getUsername() {
@@ -49,7 +57,18 @@ public class User
         return password;
     }
 
+    public void setPasswordNoEncrypt(String password)
+    {
+        this.password = password;
+    }
+
+    /**
+     * @param password the new password (String) for this user. Comes in plain text and goes out encrypted
+     */
+
+
     public void setPassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         this.password = password;
     }
 }

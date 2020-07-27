@@ -72,7 +72,7 @@ public class OpenController {
         // set the location header for the newly created resource
         // The location comes from a different controller!
         HttpHeaders responseHeaders = new HttpHeaders();
-        URI newUserURI = ServletUriComponentsBuilder.fromUriString(httpServletRequest.getServerName() + ":" + httpServletRequest.getLocalPort() + "/users/user/{userId}")
+        URI newUserURI = ServletUriComponentsBuilder.fromUriString(httpServletRequest.getServerName() + ":" + httpServletRequest.getLocalPort() + "/users/user/{userid}")
                 .buildAndExpand(newuser.getUserId())
                 .toUri();
         responseHeaders.setLocation(newUserURI);

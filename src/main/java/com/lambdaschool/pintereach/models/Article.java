@@ -1,5 +1,7 @@
 package com.lambdaschool.pintereach.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,21 +10,24 @@ public class Article
 {
     @Id
     @GeneratedValue
-    private long articleId;
+    private long articleid;
 
-    private String imageUrl;
+    private String Url;
 
     private String title;
 
-    @Column(nullable = false)
-    private String categoryId;
+    @ManyToOne
+    @JoinColumn(name = "categoryid",
+            nullable = false)
+    @JsonIgnoreProperties(value = "articles", allowSetters = true)
+    private Category category;
 
     private String description;
 
-    public Article(String imageUrl, String title, String categoryId, String description) {
-        this.imageUrl = imageUrl;
+    public Article(String Url, String title, Category category, String description) {
+        this.Url = Url;
         this.title = title;
-        this.categoryId = categoryId;
+        this.category = category;
         this.description = description;
     }
 
@@ -31,20 +36,20 @@ public class Article
     //default constructor
     }
 
-    public long getArticleId() {
-        return articleId;
+    public long getArticleid() {
+        return articleid;
     }
 
-    public void setArticleId(long articleId) {
-        this.articleId = articleId;
+    public void setArticleid(long articleid) {
+        this.articleid = articleid;
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return Url;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrl(String Url) {
+        this.Url = Url;
     }
 
     public String getTitle() {
@@ -55,12 +60,12 @@ public class Article
         this.title = title;
     }
 
-    public String getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getDescription() {

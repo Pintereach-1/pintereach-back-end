@@ -22,8 +22,8 @@ public class CategoryController
     @Autowired
     CategoryService categoryService;
 
-    // http://localhost:2019/books/books
-    @GetMapping(value = "/books",
+    // http://localhost:2019/categories/categories
+    @GetMapping(value = "/categories",
             produces = {"application/json"})
     public ResponseEntity<?> listAllBooks(HttpServletRequest request)
     {
@@ -33,30 +33,30 @@ public class CategoryController
     }
 
     // http://localhost:2019/books/book/{bookId}
-    @GetMapping(value = "/category/{categoryId}",
+    @GetMapping(value = "/category/{categoryid}",
             produces = {"application/json"})
     public ResponseEntity<?> getCategoryById(HttpServletRequest request,
                                          @PathVariable
-                                                 Long categoryId)
+                                                 Long categoryid)
     {
-        Book s = bookService.findBookById(bookId);
+        Category s = categoryService.findCategoryById(categoryid);
         return new ResponseEntity<>(s,
                 HttpStatus.OK);
     }
 
     // POST http://localhost:2019/books/book
-    @PostMapping(value = "/book", consumes = "application/json")
-    public ResponseEntity<?> addNewBook(@Valid @RequestBody Book newBook) throws
+    @PostMapping(value = "/category", consumes = "application/json")
+    public ResponseEntity<?> addNewBook(@Valid @RequestBody Category newCategory) throws
             URISyntaxException
     {
-        newBook.setBookid(0);
-        newBook = bookService.save(newBook);
+        newCategory.setCategoryid(0);
+        newCategory = categoryService.save(newCategory);
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newBookURI = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{bookid}")
-                .buildAndExpand(newBook.getBookid())
+                .path("/{categoryid}")
+                .buildAndExpand(newCategory.getCategoryid())
                 .toUri();
         responseHeaders.setLocation(newBookURI);
 
@@ -65,29 +65,29 @@ public class CategoryController
                 HttpStatus.CREATED);
     }
 
-    // PUT http://localhost:2019/books/book/1
-    @PutMapping(value = "/book/{bookid}",
+    // PUT http://localhost:2019/categories/category/1
+    @PutMapping(value = "/category/{categoryid}",
             consumes = "application/json")
     public ResponseEntity<?> updateFullBook(
             @Valid
             @RequestBody
-                    Book updateBook,
+                    Category updateCategory,
             @PathVariable
-                    long bookid)
+                    long categoryid)
     {
-        updateBook.setBookid(bookid);
-        bookService.save(updateBook);
+        updateCategory.setCategoryid(categoryid);
+        categoryService.save(updateCategory);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // DELETE http://localhost:2019/books/book/1
-    @DeleteMapping(value = "/book/{id}")
+    // DELETE http://localhost:2019/categories/category/1
+    @DeleteMapping(value = "/category/{id}")
     public ResponseEntity<?> deleteBookById(
             @PathVariable
                     long id)
     {
-        bookService.delete(id);
+        categoryService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

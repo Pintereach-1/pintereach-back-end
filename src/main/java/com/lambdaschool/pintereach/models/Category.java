@@ -3,6 +3,8 @@ package com.lambdaschool.pintereach.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "category")
@@ -10,28 +12,37 @@ public class Category
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long categoryId;
+    private long categoryid;
 
     private String categoryName;
 
-    private long userId;
+    @ManyToOne
+    @JoinColumn(name = "userid",
+            nullable = false)
+    @JsonIgnoreProperties(value = "categories", allowSetters = true)
+    private User user;
+
+    @OneToMany(mappedBy = "category")
+    @JsonIgnoreProperties("category")
+    private Set<Article> articles = new HashSet<>();
 
     public Category()
     {
         //default constructor
     }
 
-    public Category(String categoryName, long userId) {
+    public Category(String categoryName, User user) {
         this.categoryName = categoryName;
-        this.userId = userId;
+        this.user = user;
+
     }
 
-    public long getCategoryId() {
-        return categoryId;
+    public long getCategoryid() {
+        return categoryid;
     }
 
-    public void setCategoryId(long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryid(long categoryid) {
+        this.categoryid = categoryid;
     }
 
     public String getCategoryName() {
@@ -42,11 +53,19 @@ public class Category
         this.categoryName = categoryName;
     }
 
-    public long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(Set<Article> articles) {
+        this.articles = articles;
     }
 }

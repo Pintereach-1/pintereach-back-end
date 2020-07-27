@@ -58,65 +58,48 @@ public class ArticleServiceImpl
         Article newArticle = new Article();
 
         //can try to figure this block of code later
-        if (article.getArticleId() != 0) {
-            articlerepos.findById(article.getArticleId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Book id " + article.getArticleId() + " not found!"));
+        if (article.getArticleid() != 0) {
+            articlerepos.findById(article.getArticleid())
+                    .orElseThrow(() -> new ResourceNotFoundException("Book id " + article.getArticleid() + " not found!"));
         }
 
         newArticle.setTitle(article.getTitle());
 
 
-        if (article.getCategoryId() == null) {
-            newArticle.setCategoryId(categoryService.findCategoryById(article.getCategoryId()));
+        if (article.getCategory() != null)
+        {
+            newArticle.setCategory(categoryService.findCategoryById(article.getCategory()
+                    .getCategoryid()));
         }
 
 
-        return bookrepos.save(newBook);
+        return articlerepos.save(newArticle);
     }
 
     @Transactional
     @Override
-    public Book update(Book book,
+    public Article update(Article book,
                        long id) {
-        Book currentBook = findBookById(id);
+        Article currentBook = findBookById(id);
 
         if (book.getTitle() != null) {
             currentBook.setTitle(book.getTitle());
         }
 
-        if (book.getIsbn() != null) {
-            currentBook.setIsbn(book.getIsbn());
+
+        if (book.getCategory() != null) {
+            currentBook.setCategory(categoryService.findCategoryById(book.getCategory()
+                    .getCategoryid()));
         }
 
-        if (book.hasvalueforcopy) {
-            currentBook.setCopy(book.getCopy());
-        }
 
-        if (book.getSection() != null) {
-            currentBook.setSection(sectionService.findSectionById(book.getSection()
-                    .getSectionid()));
-        }
 
-        if (book.getWrotes()
-                .size() > 0) {
-            currentBook.getWrotes()
-                    .clear();
-            for (Wrote w : book.getWrotes()) {
-                Author addAuthor = authorrepos.findById(w.getAuthor()
-                        .getAuthorid())
-                        .orElseThrow(() -> new ResourceNotFoundException("Author Id " + w.getAuthor()
-                                .getAuthorid() + " Not Found!"));
-                currentBook.getWrotes()
-                        .add(new Wrote(addAuthor, currentBook));
-            }
-        }
-
-        return bookrepos.save(currentBook);
+        return articlerepos.save(currentBook);
     }
 
     @Transactional
     @Override
     public void deleteAll() {
-        bookrepos.deleteAll();
+        articlerepos.deleteAll();
     }
 }

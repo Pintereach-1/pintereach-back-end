@@ -1,6 +1,8 @@
 package com.lambdaschool.pintereach.controllers;
 
 
+import com.lambdaschool.pintereach.models.Article;
+import com.lambdaschool.pintereach.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,43 +20,43 @@ import java.util.List;
 public class ArticleController
 {
     @Autowired
-    BookService bookService;
+    ArticleService articleService;
 
-    // http://localhost:2019/books/books
-    @GetMapping(value = "/books",
+    // http://localhost:2019/articles/articles
+    @GetMapping(value = "/articles",
             produces = {"application/json"})
     public ResponseEntity<?> listAllBooks(HttpServletRequest request)
     {
-        List<Book> myBooks = bookService.findAll();
+        List<Article> myBooks = articleService.findAll();
         return new ResponseEntity<>(myBooks,
                 HttpStatus.OK);
     }
 
-    // http://localhost:2019/books/book/{bookId}
-    @GetMapping(value = "/book/{bookId}",
+    // http://localhost:2019/articles/article/{articleid}
+    @GetMapping(value = "/article/{articleid}",
             produces = {"application/json"})
     public ResponseEntity<?> getBookById(HttpServletRequest request,
                                          @PathVariable
-                                                 Long bookId)
+                                                 Long articleid)
     {
-        Book s = bookService.findBookById(bookId);
+        Article s = articleService.findBookById(articleid);
         return new ResponseEntity<>(s,
                 HttpStatus.OK);
     }
 
     // POST http://localhost:2019/books/book
     @PostMapping(value = "/book", consumes = "application/json")
-    public ResponseEntity<?> addNewBook(@Valid @RequestBody Book newBook) throws
+    public ResponseEntity<?> addNewBook(@Valid @RequestBody Article newBook) throws
             URISyntaxException
     {
-        newBook.setBookid(0);
-        newBook = bookService.save(newBook);
+        newBook.setArticleid(0);
+        newBook = articleService.save(newBook);
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newBookURI = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{bookid}")
-                .buildAndExpand(newBook.getBookid())
+                .buildAndExpand(newBook.getArticleid())
                 .toUri();
         responseHeaders.setLocation(newBookURI);
 
@@ -69,12 +71,12 @@ public class ArticleController
     public ResponseEntity<?> updateFullBook(
             @Valid
             @RequestBody
-                    Book updateBook,
+                    Article updateBook,
             @PathVariable
                     long bookid)
     {
-        updateBook.setBookid(bookid);
-        bookService.save(updateBook);
+        updateBook.setArticleid(bookid);
+        articleService.save(updateBook);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -85,7 +87,7 @@ public class ArticleController
             @PathVariable
                     long id)
     {
-        bookService.delete(id);
+        articleService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
