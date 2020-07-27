@@ -17,6 +17,8 @@ public class User
 
     private char password;
 
+
+
     public User(String username, char password) {
         this.username = username;
         this.password = password;
