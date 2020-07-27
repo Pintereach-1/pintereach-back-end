@@ -15,11 +15,11 @@ public class User
 
     private String username;
 
-    private char password;
+    private String password;
 
 
 
-    public User(String username, char password) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -45,11 +45,11 @@ public class User
         this.username = username;
     }
 
-    public char getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(char password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }

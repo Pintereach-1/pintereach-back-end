@@ -1,5 +1,7 @@
 package com.lambdaschool.pintereach.controllers;
 
+import com.lambdaschool.pintereach.models.User;
+import com.lambdaschool.pintereach.models.UserMinimum;
 import com.lambdaschool.pintereach.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -58,13 +62,10 @@ public class OpenController {
 
         newuser.setUsername(newminuser.getUsername());
         newuser.setPassword(newminuser.getPassword());
-        newuser.setPrimaryemail(newminuser.getPrimaryemail());
+
 
         // add the default role of user
-        Set<UserRoles> newRoles = new HashSet<>();
-        newRoles.add(new UserRoles(newuser,
-                roleService.findByName("user")));
-        newuser.setRoles(newRoles);
+
 
         newuser = userService.save(newuser);
 
@@ -72,7 +73,7 @@ public class OpenController {
         // The location comes from a different controller!
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newUserURI = ServletUriComponentsBuilder.fromUriString(httpServletRequest.getServerName() + ":" + httpServletRequest.getLocalPort() + "/users/user/{userId}")
-                .buildAndExpand(newuser.getUserid())
+                .buildAndExpand(newuser.getUserId())
                 .toUri();
         responseHeaders.setLocation(newUserURI);
 

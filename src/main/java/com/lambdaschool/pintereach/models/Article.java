@@ -1,9 +1,6 @@
 package com.lambdaschool.pintereach.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "article")
@@ -17,6 +14,7 @@ public class Article
 
     private String title;
 
+    @Column(nullable = false)
     private String categoryId;
 
     private String description;

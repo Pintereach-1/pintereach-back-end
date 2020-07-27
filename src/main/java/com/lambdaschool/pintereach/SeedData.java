@@ -1,6 +1,7 @@
 package com.lambdaschool.pintereach;
 
 import com.lambdaschool.pintereach.models.Article;
+import com.lambdaschool.pintereach.models.Category;
 import com.lambdaschool.pintereach.models.User;
 import com.lambdaschool.pintereach.services.ArticleService;
 import com.lambdaschool.pintereach.services.CategoryService;
@@ -49,96 +50,63 @@ ArticleService articleService;
 
         // admin, data, user
         User u1 = new User("admin",
-                "password",
-                "admin@lambdaschool.local");
-        u1.getRoles()
-                .add(new UserRoles(u1, r1));
-        u1.getRoles()
-                .add(new UserRoles(u1, r2));
-        u1.getRoles()
-                .add(new UserRoles(u1, r3));
-        u1.getUseremails()
-                .add(new Useremail(u1,
-                        "admin@email.local"));
-        u1.getUseremails()
-                .add(new Useremail(u1,
-                        "admin@mymail.local"));
+                "password");
 
         userService.save(u1);
 
         // data, user
-        User u2 = new User("cinnamon",
-                "1234567",
-                "cinnamon@lambdaschool.local");
-        u2.getRoles()
-                .add(new UserRoles(u2, r2));
-        u2.getRoles()
-                .add(new UserRoles(u2, r3));
-        u2.getUseremails()
-                .add(new Useremail(u2,
-                        "cinnamon@mymail.local"));
-        u2.getUseremails()
-                .add(new Useremail(u2,
-                        "hops@mymail.local"));
-        u2.getUseremails()
-                .add(new Useremail(u2,
-                        "bunny@email.local"));
+        User u2 = new User("karina",
+                "krodriguez");
+
         userService.save(u2);
 
         // user
-        User u3 = new User("barnbarn",
-                "ILuvM4th!",
-                "barnbarn@lambdaschool.local");
-        u3.getRoles()
-                .add(new UserRoles(u3, r2));
-        u3.getUseremails()
-                .add(new Useremail(u3,
-                        "barnbarn@email.local"));
+        User u3 = new User("jorge",
+                "jmanzur");
+
         userService.save(u3);
 
-        User u4 = new User("puttat",
-                "password",
-                "puttat@school.lambda");
-        u4.getRoles()
-                .add(new UserRoles(u4, r2));
+        User u4 = new User("brendan",
+                "bneil");
+
         userService.save(u4);
 
-        User u5 = new User("misskitty",
-                "password",
-                "misskitty@school.lambda");
-        u5.getRoles()
-                .add(new UserRoles(u5, r2));
+        User u5 = new User("violeta",
+                "vdimov");
+
         userService.save(u5);
 
+        User u6 = new User("hung",
+                "htruong");
+
+        userService.save(u6);
+
+        User u7 = new User("tim",
+                "tmcdonald");
+
+        userService.save(u7);
+
+        User u8 = new User("william",
+                "wherman");
+
+        userService.save(u8);
+
         /************
-         * Seed Books
+         * Seed Articles
          ************/
 
-        Author a1 = new Author("John", "Mitchell");
-        Author a2 = new Author("Dan", "Brown");
-        Author a3 = new Author("Jerry", "Poe");
-        Author a4 = new Author("Wells", "Teague");
-        Author a5 = new Author("George", "Gallinger");
-        Author a6 = new Author("Ian", "Stewart");
 
-        a1 = authorService.save(a1);
-        a2 = authorService.save(a2);
-        a3 = authorService.save(a3);
-        a4 = authorService.save(a4);
-        a5 = authorService.save(a5);
-        a6 = authorService.save(a6);
+        Category c1 = new Category("Fiction");
+        Category c2 = new Category("Technology");
+        Category c3 = new Category("Travel");
+        Category c4 = new Category("Business");
+        Category c5 = new Category("Religion");
 
-        Section s1 = new Section("Fiction");
-        Section s2 = new Section("Technology");
-        Section s3 = new Section("Travel");
-        Section s4 = new Section("Business");
-        Section s5 = new Section("Religion");
-
-        s1 = sectionService.save(s1);
-        s2 = sectionService.save(s2);
-        s3 = sectionService.save(s3);
-        s4 = sectionService.save(s4);
-        s5 = sectionService.save(s5);
+        c1 = categoryService.save(c1);
+        c2 = categoryService.save(c2);
+        c3 = categoryService.save(c3);
+        c4 = categoryService.save(c4);
+        c5 = categoryService.save(c5);
 
         Article a1 = new Book("Test Flatterland", "9780738206752", 2001, s1);
         b1.getWrotes()
