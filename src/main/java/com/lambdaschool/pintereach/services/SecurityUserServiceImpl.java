@@ -1,10 +1,9 @@
 package com.lambdaschool.pintereach.services;
 
-import com.lambdaschool.pintereach.exceptions.ResourceNotFoundException;
-import com.lambdaschool.bookstore.models.User;
-import com.lambdaschool.bookstore.repository.UserRepository;
+
+import com.lambdaschool.pintereach.exception.ResourceNotFoundException;
 import com.lambdaschool.pintereach.repositories.UserRepository;
-import org.apache.velocity.exception.ResourceNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -40,7 +39,7 @@ public class SecurityUserServiceImpl
             throws
             ResourceNotFoundException
     {
-        User user = userrepos.findByUsername(s.toLowerCase());
+        com.lambdaschool.pintereach.models.User user = userrepos.findByUsername(s.toLowerCase());
         if (user == null)
         {
             throw new ResourceNotFoundException("Invalid username or password.");

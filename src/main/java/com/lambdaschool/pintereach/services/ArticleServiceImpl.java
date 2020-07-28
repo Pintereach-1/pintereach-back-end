@@ -1,8 +1,9 @@
 package com.lambdaschool.pintereach.services;
 
+import com.lambdaschool.pintereach.exception.ResourceNotFoundException;
 import com.lambdaschool.pintereach.models.Article;
 import com.lambdaschool.pintereach.repositories.ArticleRepository;
-import org.apache.velocity.exception.ResourceNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

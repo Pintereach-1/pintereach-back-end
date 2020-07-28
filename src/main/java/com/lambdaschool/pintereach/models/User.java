@@ -1,6 +1,8 @@
 package com.lambdaschool.pintereach.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
@@ -70,5 +72,17 @@ public class User
     public void setPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         this.password = password;
+    }
+
+    @JsonIgnore
+    public List<SimpleGrantedAuthority> getAuthority()
+    {
+        List<SimpleGrantedAuthority> rtnList = new ArrayList<>();
+
+            String myRole = "ROLE_" + this.getUserId();
+            rtnList.add(new SimpleGrantedAuthority(myRole));
+
+
+        return rtnList;
     }
 }

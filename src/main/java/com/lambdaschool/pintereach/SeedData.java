@@ -47,9 +47,6 @@ ArticleService articleService;
         userService.deleteAll();
 
 
-
-
-
         // admin, data, user
         User u1 = new User("admin",
                 "password");
@@ -116,39 +113,20 @@ ArticleService articleService;
 
         Article a2 = new Article("https://www.jstor.org/stable/10.1641/b570903", "Evolutionary Biology and Human Health\n" +
                 "By Cheryl Lyn Dybas", c1, "Talks about Evolutionary Biology");
+        a2 = articleService.save(a2);
 
         Article a3 = new Article("https://www.jstor.org/stable/10.21832/j.ctt1xp3wcc.15", "11 Variation or ‘Error’?: Perception of Pronunciation Variation and Implications for Assessment\n" +
                 "Stephanie Lindemann", c3, "Talks about variations in the English language");
+        a3 = articleService.save(a3);
 
         Article a4 = new Article("https://www.jstor.org/stable/24917409", "Particle physics in a superconductor\n" +
                 "Alexej Pashkin and Alfred Leitenstorfer", c2, "Talks about Particle Physics");
+        a4 = articleService.save(a4);
 
         Article a5 = new Article("https://www.jstor.org/stable/2140885", "The Political Theories of Jean Jacques Rousseau\n" +
                 "Wm. A. Dunning", c5, "Talks about the Rousseau's political theories");
+        a5 = articleService.save(a5);
 
 
-//        System.out.println("***** BOOK IDs *****");
-//        System.out.println(b1.getTitle() + " " + b1.getBookid());
-//        System.out.println(b2.getTitle() + " " + b2.getBookid());
-//        System.out.println(b3.getTitle() + " " + b3.getBookid());
-//        System.out.println(b4.getTitle() + " " + b4.getBookid());
-//        System.out.println(b5.getTitle() + " " + b5.getBookid());
-//
-//        System.out.println();
-//        System.out.println("***** Section Ids *****");
-//        System.out.println(s1.getName() + " " + s1.getSectionid());
-//        System.out.println(s2.getName() + " " + s2.getSectionid());
-//        System.out.println(s3.getName() + " " + s3.getSectionid());
-//        System.out.println(s4.getName() + " " + s4.getSectionid());
-//        System.out.println(s5.getName() + " " + s5.getSectionid());
-//
-//        System.out.println();
-//        System.out.println("***** Author Ids *****");
-//        System.out.println(a1.getFname() + " " + a1.getLname() + " " + a1.getAuthorid());
-//        System.out.println(a2.getFname() + " " + a2.getLname() + " " + a2.getAuthorid());
-//        System.out.println(a3.getFname() + " " + a3.getLname() + " " + a3.getAuthorid());
-//        System.out.println(a4.getFname() + " " + a4.getLname() + " " + a4.getAuthorid());
-//        System.out.println(a5.getFname() + " " + a5.getLname() + " " + a5.getAuthorid());
-//        System.out.println(a6.getFname() + " " + a6.getLname() + " " + a6.getAuthorid());
     }
 }
