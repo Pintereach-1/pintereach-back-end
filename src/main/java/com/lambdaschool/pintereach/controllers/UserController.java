@@ -15,6 +15,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class UserController
 {
     /**

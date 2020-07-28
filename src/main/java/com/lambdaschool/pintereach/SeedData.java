@@ -8,15 +8,18 @@ import com.lambdaschool.pintereach.services.CategoryService;
 import com.lambdaschool.pintereach.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
+@Component
 public class SeedData
-        implements CommandLineRunner
-{/**
- * Connects the Article Service to this process
- */
-@Autowired
-ArticleService articleService;
+        implements CommandLineRunner {
+    /**
+     * Connects the Article Service to this process
+     */
+    @Autowired
+    ArticleService articleService;
 
     /**
      * Connects the user service to this process
@@ -40,8 +43,9 @@ ArticleService articleService;
     @Transactional
     @Override
     public void run(String[] args) throws
-            Exception
-    {
+            Exception {
+
+
         articleService.deleteAll();
         categoryService.deleteAll();
         userService.deleteAll();
@@ -94,7 +98,7 @@ ArticleService articleService;
          * Seed Articles
          ************/
 
-
+/*
         Category c1 = new Category("Biology", u1);
         Category c2 = new Category("Physics",u2);
         Category c3 = new Category("English",u3);
@@ -126,7 +130,7 @@ ArticleService articleService;
         Article a5 = new Article("https://www.jstor.org/stable/2140885", "The Political Theories of Jean Jacques Rousseau\n" +
                 "Wm. A. Dunning", c5, "Talks about the Rousseau's political theories");
         a5 = articleService.save(a5);
-
+*/
 
     }
 }

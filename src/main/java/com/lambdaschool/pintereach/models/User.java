@@ -30,8 +30,8 @@ public class User
 
 
     public User(String username, String password) {
-        this.username = username;
-        this.password = password;
+        setUsername(username);
+        setPassword(password);
     }
 
     public User()
@@ -71,7 +71,7 @@ public class User
 
     public void setPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        this.password = password;
+        this.password = passwordEncoder.encode(password);
     }
 
     @JsonIgnore

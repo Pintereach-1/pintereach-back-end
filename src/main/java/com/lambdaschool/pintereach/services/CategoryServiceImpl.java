@@ -81,11 +81,7 @@ public class CategoryServiceImpl
         newCategory.setCategoryName(category.getCategoryName());
 
 
-        //if (category.getCategoryName() != null)
-        //{
-            //newCategory.setCategoryid(categoryService.findSectionById(category.getSection()
-                    //.getSectionid()));
-        //}
+
 
 
         return categoryrepos.save(newCategory);
@@ -105,11 +101,7 @@ public class CategoryServiceImpl
 
 
 
-        //if (category.getCategoryName() != null)
-        //{
-            //currentBook.setSection(sectionService.findSectionById(book.getSection()
-                    //.getSectionid()));
-        //}
+
 
 
 

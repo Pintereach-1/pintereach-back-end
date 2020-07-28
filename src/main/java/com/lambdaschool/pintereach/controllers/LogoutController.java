@@ -1,5 +1,6 @@
 package com.lambdaschool.pintereach.controllers;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  * The application implements its own logout endpoint. This works by removing the authentication token for the user.
  */
 @Controller
-class LogoutController
+public class LogoutController
 {
     /**
      * Connect to the Token store so the application can remove the token
