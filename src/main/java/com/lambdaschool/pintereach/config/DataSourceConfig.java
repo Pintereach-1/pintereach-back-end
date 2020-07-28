@@ -29,7 +29,7 @@ public class DataSourceConfig
         if (dbValue.equalsIgnoreCase("POSTGRESQL"))
         {
             HikariConfig config = new HikariConfig();
-            config.setJdbcUrl(dbUrl);
+            config.setJdbcUrl(dbValue);
             return new HikariDataSource(config);
         } else
         {
