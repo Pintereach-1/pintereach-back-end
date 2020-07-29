@@ -55,55 +55,55 @@ public class SeedData
         User u1 = new User("admin",
                 "password");
 
-        userService.save(u1);
+        u1 = userService.save(u1);
 
         // data, user
         User u2 = new User("karina",
                 "krodriguez");
 
-        userService.save(u2);
+        u2 = userService.save(u2);
 
         // user
         User u3 = new User("jorge",
                 "jmanzur");
 
-        userService.save(u3);
+        u3 = userService.save(u3);
 
         User u4 = new User("brendan",
                 "bneil");
 
-        userService.save(u4);
+        u4 = userService.save(u4);
 
         User u5 = new User("violeta",
                 "vdimov");
 
-        userService.save(u5);
+        u5 = userService.save(u5);
 
         User u6 = new User("hung",
                 "htruong");
 
-        userService.save(u6);
+        u6 = userService.save(u6);
 
         User u7 = new User("tim",
                 "tmcdonald");
 
-        userService.save(u7);
+        u7 = userService.save(u7);
 
         User u8 = new User("william",
                 "wherman");
 
-        userService.save(u8);
+        u8 = userService.save(u8);
 
         /************
          * Seed Articles
          ************/
 
-/*
+
         Category c1 = new Category("Biology", u1);
-        Category c2 = new Category("Physics",u2);
-        Category c3 = new Category("English",u3);
-        Category c4 = new Category("History",u4);
-        Category c5 = new Category("Political Science",u7 );
+        Category c2 = new Category("Physics", u2);
+        Category c3 = new Category("English", u3);
+        Category c4 = new Category("History", u4);
+        Category c5 = new Category("Political Science", u7);
 
         c1 = categoryService.save(c1);
         c2 = categoryService.save(c2);
@@ -120,17 +120,17 @@ public class SeedData
         a2 = articleService.save(a2);
 
         Article a3 = new Article("https://www.jstor.org/stable/10.21832/j.ctt1xp3wcc.15", "11 Variation or ‘Error’?: Perception of Pronunciation Variation and Implications for Assessment\n" +
-                "Stephanie Lindemann", c3, "Talks about variations in the English language");
+                "By Stephanie Lindemann", c3, "Talks about variations in the English language");
         a3 = articleService.save(a3);
 
         Article a4 = new Article("https://www.jstor.org/stable/24917409", "Particle physics in a superconductor\n" +
-                "Alexej Pashkin and Alfred Leitenstorfer", c2, "Talks about Particle Physics");
+                "By Alexej Pashkin and Alfred Leitenstorfer", c2, "Talks about Particle Physics");
         a4 = articleService.save(a4);
 
         Article a5 = new Article("https://www.jstor.org/stable/2140885", "The Political Theories of Jean Jacques Rousseau\n" +
                 "By Wm. A. Dunning", c5, "Talks about the Rousseau's political theories");
         a5 = articleService.save(a5);
-*/
+
 
     }
 }

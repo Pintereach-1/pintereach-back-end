@@ -36,7 +36,7 @@ public class ArticleServiceImpl
     }
 
     @Override
-    public Article findBookById(long id) {
+    public Article findArticleById(long id) {
         return articlerepos.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book with id " + id + " Not Found!"));
     }
@@ -56,12 +56,13 @@ public class ArticleServiceImpl
     @Transactional
     @Override
     public Article save(Article article) {
+        /*
         Article newArticle = new Article();
 
         //can try to figure this block of code later
         if (article.getArticleid() != 0) {
             articlerepos.findById(article.getArticleid())
-                    .orElseThrow(() -> new ResourceNotFoundException("Book id " + article.getArticleid() + " not found!"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Article id " + article.getArticleid() + " not found!"));
         }
 
         newArticle.setTitle(article.getTitle());
@@ -73,29 +74,29 @@ public class ArticleServiceImpl
                     .getCategoryid()));
         }
 
-
-        return articlerepos.save(newArticle);
+*/
+        return articlerepos.save(article);
     }
 
     @Transactional
     @Override
-    public Article update(Article book,
+    public Article update(Article article,
                        long id) {
-        Article currentBook = findBookById(id);
+        Article currentArticle = findArticleById(id);
 
-        if (book.getTitle() != null) {
-            currentBook.setTitle(book.getTitle());
+        if (article.getTitle() != null) {
+            currentArticle.setTitle(article.getTitle());
         }
 
 
-        if (book.getCategory() != null) {
-            currentBook.setCategory(categoryService.findCategoryById(book.getCategory()
+        if (article.getCategory() != null) {
+            currentArticle.setCategory(categoryService.findCategoryById(article.getCategory()
                     .getCategoryid()));
         }
 
 
 
-        return articlerepos.save(currentBook);
+        return articlerepos.save(currentArticle);
     }
 
     @Transactional

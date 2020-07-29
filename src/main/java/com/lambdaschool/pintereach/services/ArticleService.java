@@ -8,7 +8,7 @@ public interface ArticleService
 {
     List<Article> findAll();
 
-    Article findBookById(long id);
+    Article findArticleById(long id);
 
     void delete(long id);
 

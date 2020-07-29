@@ -12,7 +12,7 @@ public class Article
     @GeneratedValue
     private long articleid;
 
-    private String Url;
+    private String url;
 
     private String title;
 
@@ -24,8 +24,8 @@ public class Article
 
     private String description;
 
-    public Article(String Url, String title, Category category, String description) {
-        this.Url = Url;
+    public Article(String url, String title, Category category, String description) {
+        this.url = url;
         this.title = title;
         this.category = category;
         this.description = description;
@@ -45,11 +45,11 @@ public class Article
     }
 
     public String getImageUrl() {
-        return Url;
+        return url;
     }
 
-    public void setImageUrl(String Url) {
-        this.Url = Url;
+    public void setImageUrl(String url) {
+        this.url = url;
     }
 
     public String getTitle() {

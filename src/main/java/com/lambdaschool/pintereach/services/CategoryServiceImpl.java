@@ -1,5 +1,6 @@
 package com.lambdaschool.pintereach.services;
 
+import com.lambdaschool.pintereach.exception.ResourceFoundException;
 import com.lambdaschool.pintereach.exception.ResourceNotFoundException;
 import com.lambdaschool.pintereach.models.Article;
 import com.lambdaschool.pintereach.models.Category;
@@ -70,18 +71,17 @@ public class CategoryServiceImpl
     @Override
     public Category save(Category category)
     {
+    /*
         Category newCategory = new Category();
-        /*if (author.getWrotes()
-                .size() > 0)
+        if (category.getCategoryName() != null)
         {
-            throw new ResourceFoundException("Wrotes are not added through Author.");
+            newCategory.setCategoryName(category.getCategoryName());
         }
 
-        Author newAuthor = new Author();
-        newAuthor.setFname(author.getFname());
-        newAuthor.setLname(author.getLname());*/
 
-        return categoryrepos.save(newCategory);
+        newCategory.setUser(category.getUser());
+    */
+        return categoryrepos.save(category);
     }
 
     @Transactional
@@ -89,22 +89,21 @@ public class CategoryServiceImpl
     public Category update(Category category,
                        long id)
     {
-        Category currentCategory = findCategoryById(id);/*
-        if (author.getWrotes()
-                .size() > 0)
+        Category currentCategory = findCategoryById(id);
+        if (category.getCategoryName() !=null)
         {
-            throw new ResourceFoundException("Wrotes are not updated through Author.");
+            throw new ResourceFoundException("Category not updated.");
         }
 
-        if (author.getFname() != null)
+        if (category.getCategoryName() != null)
         {
-            currentAuthor.setFname(author.getFname());
+            currentCategory.setCategoryName(category.getCategoryName());
         }
 
-        if (author.getLname() != null)
+        if (category.getUser() != null)
         {
-            currentAuthor.setLname(author.getLname());
-        }*/
+            currentCategory.setUser(category.getUser());
+        }
         return categoryrepos.save(currentCategory);
     }
 
