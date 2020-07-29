@@ -128,7 +128,7 @@ public class SeedData
         a4 = articleService.save(a4);
 
         Article a5 = new Article("https://www.jstor.org/stable/2140885", "The Political Theories of Jean Jacques Rousseau\n" +
-                "Wm. A. Dunning", c5, "Talks about the Rousseau's political theories");
+                "By Wm. A. Dunning", c5, "Talks about the Rousseau's political theories");
         a5 = articleService.save(a5);
 */
 

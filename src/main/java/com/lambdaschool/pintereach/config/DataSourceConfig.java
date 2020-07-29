@@ -9,30 +9,22 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-
 import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfig
 {
-    @Autowired
-    private ApplicationContext appContext;
-    @Autowired
-    private Environment env;
-
-    //@Value("${spring.data.source.url}")
-    private String dbUrl;
+    //@Value("${spring.datasource.url}")
+    //private String dbUrl;
     @Bean
     public DataSource dataSource()
     {
-        String dbValue = env.getProperty("local.run.db");
-
-        if (dbValue.equalsIgnoreCase("POSTGRESQL"))
-        {
-            HikariConfig config = new HikariConfig();
-            config.setJdbcUrl(dbValue);
-            return new HikariDataSource(config);
-        } else
-        {
+        String dbUrl = System.getenv("JDBC_DATABASE_URL");
+        if (dbUrl != null) {
+            return DataSourceBuilder.create()
+                    .url(dbUrl)
+                    .driverClassName("org.postgresql.Driver")
+                    .build();
+        } else {
             return DataSourceBuilder.create()
                     .username("sa")
                     .password("")
@@ -40,6 +32,5 @@ public class DataSourceConfig
                     .driverClassName("org.h2.Driver")
                     .build();
         }
-
     }
 }

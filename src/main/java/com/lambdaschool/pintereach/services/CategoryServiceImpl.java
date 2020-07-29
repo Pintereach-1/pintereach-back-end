@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
-@Service("categoryService")
+@Service(value="categoryService")
 public class CategoryServiceImpl
         implements CategoryService
 {
@@ -71,18 +71,15 @@ public class CategoryServiceImpl
     public Category save(Category category)
     {
         Category newCategory = new Category();
-
-        if (category.getCategoryid() != 0)
+        /*if (author.getWrotes()
+                .size() > 0)
         {
-            categoryrepos.findById(category.getCategoryid())
-                    .orElseThrow(() -> new ResourceNotFoundException("Book id " + category.getCategoryid() + " not found!"));
+            throw new ResourceFoundException("Wrotes are not added through Author.");
         }
 
-        newCategory.setCategoryName(category.getCategoryName());
-
-
-
-
+        Author newAuthor = new Author();
+        newAuthor.setFname(author.getFname());
+        newAuthor.setLname(author.getLname());*/
 
         return categoryrepos.save(newCategory);
     }
@@ -92,20 +89,22 @@ public class CategoryServiceImpl
     public Category update(Category category,
                        long id)
     {
-        Category currentCategory = findCategoryById(id);
-
-        if (category.getCategoryName() != null)
+        Category currentCategory = findCategoryById(id);/*
+        if (author.getWrotes()
+                .size() > 0)
         {
-            currentCategory.setCategoryName(category.getCategoryName());
+            throw new ResourceFoundException("Wrotes are not updated through Author.");
         }
 
+        if (author.getFname() != null)
+        {
+            currentAuthor.setFname(author.getFname());
+        }
 
-
-
-
-
-
-
+        if (author.getLname() != null)
+        {
+            currentAuthor.setLname(author.getLname());
+        }*/
         return categoryrepos.save(currentCategory);
     }
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
-@Service("articleService")
+@Service(value="articleService")
 public class ArticleServiceImpl
         implements ArticleService {
     @Autowired
