@@ -44,11 +44,11 @@ public class Article
         this.articleid = articleid;
     }
 
-    public String getImageUrl() {
+    public String getUrl() {
         return url;
     }
 
-    public void setImageUrl(String url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 

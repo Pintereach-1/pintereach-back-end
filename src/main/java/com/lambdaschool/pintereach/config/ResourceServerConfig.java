@@ -48,7 +48,7 @@ public class ResourceServerConfig
                         "/webjars/**",
                         "/createnewuser")
                 .permitAll()
-                .antMatchers("/users/**",
+                .antMatchers("/users/**", "/articles/**", "/categories/**",
                         "/oauth/revoke-token",
                         "/logout")
                 .authenticated()

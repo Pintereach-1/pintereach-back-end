@@ -2,6 +2,7 @@ package com.lambdaschool.pintereach.services;
 
 import com.lambdaschool.pintereach.exception.ResourceNotFoundException;
 import com.lambdaschool.pintereach.models.Article;
+import com.lambdaschool.pintereach.models.User;
 import com.lambdaschool.pintereach.repositories.ArticleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,18 @@ public class ArticleServiceImpl
                 .orElseThrow(() -> new ResourceNotFoundException("Book with id " + id + " Not Found!"));
     }
 
+    @Override
+    public Article findByArticleIdAndUser(Long articleId, User user)
+    {
+        return articlerepos.findByArticleidAndUser(articleId, user)
+                .orElseThrow(() -> new ResourceNotFoundException("Category with id " + articleId + " Not Found!"));
+    }
+
+    @Override
+    public List<Article> findAllByUser(User user)
+    {
+        return articlerepos.findAllByUser(user);
+    }
 
     @Transactional
     @Override
@@ -84,15 +97,15 @@ public class ArticleServiceImpl
                        long id) {
         Article currentArticle = findArticleById(id);
 
-        if (article.getTitle() != null) {
+        /*if (article.getTitle() != null) {
             currentArticle.setTitle(article.getTitle());
         }
 
 
         if (article.getCategory() != null) {
-            currentArticle.setCategory(categoryService.findCategoryById(article.getCategory()
+            currentArticle.setCategory(categoryService.findByCategoryIdAndUserId(article.getCategory()
                     .getCategoryid()));
-        }
+        }*/
 
 
 

@@ -11,21 +11,23 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Transactional
+/*@Transactional
 @Service(value = "userService")
 public class UserServiceImpl
         implements UserService
 {
+
     /**
      * Connects this service to the User table.
      */
+/*
     @Autowired
     private UserRepository userrepos;
 
     /**
      * Connects this service to the Role table
      */
-
+/*
 
     public User findUserById(long id) throws
             ResourceNotFoundException
@@ -48,6 +50,7 @@ public class UserServiceImpl
          * findAll returns an iterator set.
          * iterate over the iterator set and add each element to an array list.
          */
+/*
         userrepos.findAll()
                 .iterator()
                 .forEachRemaining(list::add);
@@ -132,4 +135,7 @@ public class UserServiceImpl
     {
         userrepos.deleteAll();
     }
+
 }
+
+ */

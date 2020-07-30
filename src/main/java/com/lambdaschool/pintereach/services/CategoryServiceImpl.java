@@ -1,17 +1,14 @@
 package com.lambdaschool.pintereach.services;
 
-import com.lambdaschool.pintereach.exception.ResourceFoundException;
 import com.lambdaschool.pintereach.exception.ResourceNotFoundException;
-import com.lambdaschool.pintereach.models.Article;
 import com.lambdaschool.pintereach.models.Category;
-import com.lambdaschool.pintereach.repositories.ArticleRepository;
+import com.lambdaschool.pintereach.models.User;
 import com.lambdaschool.pintereach.repositories.CategoryRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -36,20 +33,16 @@ public class CategoryServiceImpl
 
 
     @Override
-    public List<Category> findAll()
+    public List<Category> findAllByUser(User user)
     {
-        List<Category> list = new ArrayList<>();
-        categoryrepos.findAll()
-                .iterator()
-                .forEachRemaining(list::add);
-        return list;
+        return categoryrepos.findAllByUser(user);
     }
 
     @Override
-    public Category findCategoryById(long id)
+    public Category findByCategoryIdAndUser(Long categoryId, User user)
     {
-        return categoryrepos.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Book with id " + id + " Not Found!"));
+        return categoryrepos.findByCategoryidAndUser(categoryId, user)
+                .orElseThrow(() -> new ResourceNotFoundException("Category with id " + categoryId + " Not Found!"));
     }
 
 
@@ -63,7 +56,7 @@ public class CategoryServiceImpl
             categoryrepos.deleteById(id);
         } else
         {
-            throw new ResourceNotFoundException("Book with id " + id + " Not Found!");
+            throw new ResourceNotFoundException("Category with id " + id + " Not Found!");
         }
     }
 
@@ -83,7 +76,7 @@ public class CategoryServiceImpl
     */
         return categoryrepos.save(category);
     }
-
+/*
     @Transactional
     @Override
     public Category update(Category category,
@@ -106,7 +99,7 @@ public class CategoryServiceImpl
         }
         return categoryrepos.save(currentCategory);
     }
-
+*/
     @Transactional
     @Override
     public void deleteAll()

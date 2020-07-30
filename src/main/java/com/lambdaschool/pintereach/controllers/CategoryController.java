@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -32,9 +32,10 @@ public class CategoryController
     // http://localhost:2019/categories/categories
     @GetMapping(value = "/categories",
             produces = {"application/json"})
-    public ResponseEntity<?> listAllCategories(HttpServletRequest request)
+    public ResponseEntity<?> listAllCategories(HttpServletRequest request, Principal principal)
     {
-        List<Category> myCategories = categoryService.findAll();
+        User user = userService.findByName(principal.getName());
+        List<Category> myCategories = categoryService.findAllByUser(user);
         return new ResponseEntity<>(myCategories,
                 HttpStatus.OK);
     }
@@ -43,22 +44,21 @@ public class CategoryController
     @GetMapping(value = "/category/{categoryid}",
             produces = {"application/json"})
     public ResponseEntity<?> getCategoryById(HttpServletRequest request,
-                                         @PathVariable
-                                                 Long categoryid)
+                                             @PathVariable Long categoryid,
+                                             Principal principal)
     {
-        Category s = categoryService.findCategoryById(categoryid);
-        return new ResponseEntity<>(s,
-                HttpStatus.OK);
+        User user = userService.findByName(principal.getName());
+        Category category = categoryService.findByCategoryIdAndUser(categoryid, user);
+        return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     // POST http://localhost:2019/categories/category
     @PostMapping(value = "/category", consumes = "application/json")
-    public ResponseEntity<?> addNewCategory(@Valid @RequestBody Category newCategory) throws
+    public ResponseEntity<?> addNewCategory(@Valid @RequestBody Category newCategory, Principal principal) throws
             URISyntaxException
     {
-        org.springframework.security.core.userdetails.User userdetails = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = userdetails.getUsername();
-        User user = userService.findByName(username);
+
+        User user = userService.findByName(principal.getName());
 
         newCategory.setCategoryid(0);
         newCategory.setUser(user);
@@ -85,11 +85,11 @@ public class CategoryController
             @RequestBody
                     Category updateCategory,
             @PathVariable
-                    long categoryid)
+                    long categoryid,
+            Principal principal)
     {
-        org.springframework.security.core.userdetails.User userdetails = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = userdetails.getUsername();
-        User user = userService.findByName(username);
+        User user = userService.findByName(principal.getName());
+        Category category = categoryService.findByCategoryIdAndUser(categoryid, user);
 
         updateCategory.setUser(user);
         updateCategory.setCategoryid(categoryid);
@@ -99,12 +99,15 @@ public class CategoryController
     }
 
     // DELETE http://localhost:2019/categories/category/1
-    @DeleteMapping(value = "/category/{id}")
+    @DeleteMapping(value = "/category/{categoryid}")
     public ResponseEntity<?> deleteCategoryById(
             @PathVariable
-                    long id)
+                    long categoryid,
+            Principal principal)
     {
-        categoryService.delete(id);
+        User user = userService.findByName(principal.getName());
+        Category category = categoryService.findByCategoryIdAndUser(categoryid, user);
+        categoryService.delete(category.getCategoryid());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
