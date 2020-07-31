@@ -1,27 +1,46 @@
 package com.lambdaschool.pintereach;
 
+import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.context.WebApplicationContext;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.number.OrderingComparison.lessThan;
+import static org.hamcrest.Matchers.lessThan;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserControllerIntegrationTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    String token;
+
     @Before
     public void initialiseRestAssuredMockMvcWebApplicationContext() {
         RestAssuredMockMvc.webAppContextSetup(webApplicationContext);
+
+        token = given().
+                param("username", "karina").
+                param("password", "krodriguez").
+                param("grant_type", "password").
+                header("Accept", ContentType.JSON.getAcceptHeader()).
+                header("Authorization", "Basic bGFtYmRhLWNsaWVudDpsYW1iZGEtc2VjcmV0"). // + Base64.getEncoder().encode("lambda-client:lambda-secret".getBytes())).
+                post("/login").
+                then().
+                statusCode(200).
+                extract().
+                response().
+                jsonPath().getString("access_token");
     }
 
     //    GET /restaurants/restaurants
@@ -32,7 +51,7 @@ public class UserControllerIntegrationTest {
                 .then()
                 .time(lessThan(5000L));
     }
-
+/*
 
     //    POST /restaurants/restaurant
     @Test
@@ -115,5 +134,5 @@ public class UserControllerIntegrationTest {
                 .then()
                 .statusCode(200);
     }
-
+*/
 }

@@ -1,6 +1,7 @@
 package com.lambdaschool.pintereach;
 
 
+import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.context.WebApplicationContext;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.number.OrderingComparison.lessThan;
 
 @RunWith(SpringRunner.class)
@@ -20,26 +20,44 @@ public class CategoryControllerIntegrationTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    String token;
+
     @Before
     public void initialiseRestAssuredMockMvcWebApplicationContext() {
         RestAssuredMockMvc.webAppContextSetup(webApplicationContext);
+
+        token = given().
+                param("username", "karina").
+                param("password", "krodriguez").
+                param("grant_type", "password").
+                header("Accept", ContentType.JSON.getAcceptHeader()).
+                header("Authorization", "Basic bGFtYmRhLWNsaWVudDpsYW1iZGEtc2VjcmV0"). // + Base64.getEncoder().encode("lambda-client:lambda-secret".getBytes())).
+                post("/login").
+                then().
+                statusCode(200).
+                extract().
+                response().
+                jsonPath().getString("access_token");
     }
 
-    //    GET /restaurants/restaurants
+    //    GET /categories/categories
     @Test
     public void whenMeasuredReponseTime() {
-        given().when()
+        given().contentType("application/json; charset=UTF-8")
+                .header("Authorization", "Bearer " + token)
+                .when()
                 .get("/articles/articles")
                 .then()
                 .time(lessThan(5000L));
     }
 
 
-    //    POST /restaurants/restaurant
+    //    POST /categories/category
     @Test
-    public void givenPostAnArticle() throws Exception {
-        String body = "{\"title\": \"Particle physics in a superconductor\nBy Alexej Pashkin and Alfred Leitenstorfer\", \"description\": \"Talks about Particle Physics\", \"imageUrl\": \"https://www.jstor.org/stable/24917409\"}";
-        given().contentType("application/json")
+    public void givenPostACategory() throws Exception {
+        String body = "{\"categoryName\": \"Physics\"}";
+        given().contentType("application/json; charset=UTF-8")
+                .header("Authorization", "Bearer " + token)
                 .body(body)
                 .when()
                 .post("/categories/category")
@@ -47,7 +65,7 @@ public class CategoryControllerIntegrationTest {
                 .statusCode(201);
     }
 
-
+/*
     //    GET /restaurants/restaurant/{restaurantId}
     @Test
     public void givenFoundArticleId() throws
@@ -91,7 +109,7 @@ public class CategoryControllerIntegrationTest {
 
 
     //    PUT /restaurants/restaurant/{restaurantid}
-    @Test
+   /* @Test
     public void givenUpdateAnArticle() throws
             Exception {
         String body = "{\"title\": \"Particle physics in a superconductor\nBy Alexej Pashkin and Alfred Leitenstorfer\", \"description\": \"Talks about Particle Physics\", \"imageUrl\": \"https://www.jstor.org/stable/24917409\"}";
@@ -108,13 +126,13 @@ public class CategoryControllerIntegrationTest {
 
     //    DELETE /restaurants/restaurant/{restaurantid}
     //    at the end so I can use restaurant 10 in examples!
-    @Test
+    /*@Test
     public void givenDeleteAnArticle() {
         long aCategory = 10L;
         given().when()
                 .delete("/categories/category/" + aCategory)
                 .then()
                 .statusCode(200);
-    }
+    }*/
 
 }
