@@ -1,13 +1,17 @@
 package com.lambdaschool.pintereach.services;
 
+import com.lambdaschool.pintereach.PintereachApplication;
 import com.lambdaschool.pintereach.models.Category;
 import com.lambdaschool.pintereach.models.User;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
@@ -15,8 +19,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 
-
-
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = PintereachApplication.class)
 class UserServiceImplTest {
 
     @Autowired
@@ -39,7 +43,7 @@ class UserServiceImplTest {
             System.out.println(b.getUserId() + " " + b.getUsername());
         }
 
-        List<Category> categoryList = categoryService.findAllByUser();
+        List<Category> categoryList = categoryService.findAllByUser(userService.findUserById(2));
         for(Category b: categoryList)
         {
             System.out.println(b.getCategoryid() + " " + b.getCategoryName());
@@ -63,14 +67,14 @@ class UserServiceImplTest {
     @Test
     void findAll()
     {
-        assertEquals(4,userService.findAll().size());
+        assertEquals(8,userService.findAll().size());
     }
 
     @Test
     void delete()
     {
-        userService.delete(26);
-        TestCase.assertEquals(4, userService.findAll().size());
+        userService.delete(2);
+        TestCase.assertEquals(0, userService.findAll().size());
     }
 
     @Test
@@ -82,11 +86,11 @@ class UserServiceImplTest {
     @Test
     void save()
     {
-        String sectionName = "genre";
 
 
 
-        String user2Name = "Test This";
+
+        String user2Name = "karina";
         User u2 = new User(user2Name, "here");
 
 
