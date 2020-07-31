@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.context.WebApplicationContext;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.number.OrderingComparison.lessThan;
 
 @RunWith(SpringRunner.class)
@@ -65,20 +66,23 @@ public class CategoryControllerIntegrationTest {
                 .statusCode(201);
     }
 
-/*
-    //    GET /restaurants/restaurant/{restaurantId}
-    @Test
-    public void givenFoundArticleId() throws
-            Exception {
-        long aCategory = 1;
 
-        given().when()
+    //    GET /categories/category/{categoryid}
+    @Test
+    public void givenFoundCategoryId() throws
+            Exception {
+        long aCategory = 10;
+
+        given().contentType("application/json; charset=UTF-8")
+                .header("Authorization", "Bearer " + token)
+                .when()
                 .get("/categories/category/" + aCategory)
                 .then()
                 .statusCode(200)
                 .and()
-                .body(containsString("Particle"));
+                .body(containsString("Physics"));
     }
+
 
 
     //    GET /restaurants/restaurant/name/{name}
@@ -95,7 +99,7 @@ public class CategoryControllerIntegrationTest {
                 .body(containsString("Apple"));
     }
 
-
+ /*
     //    GET /restaurants/restaurants
     @Test
     public void givenFindAllArticles() {
