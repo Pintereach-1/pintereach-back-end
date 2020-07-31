@@ -44,6 +44,9 @@ public class SeedData
     @Override
     public void run(String[] args) throws
             Exception {
+        //if (System.getenv("JDBC_DATABASE_URL") != null) {
+            //return;
+        //}
 
 
         articleService.deleteAll();
