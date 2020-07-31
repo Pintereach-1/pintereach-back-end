@@ -67,7 +67,7 @@ public class ArticleController
         User user = userService.findByName(principal.getName());
         Category category = categoryService.findByCategoryIdAndUser(categoryid, user);
         newArticle.setArticleid(0);
-        category.setUser(user);
+        newArticle.setCategory(category);
         newArticle = articleService.save(newArticle);
 
         // set the location header for the newly created resource
@@ -103,7 +103,7 @@ public class ArticleController
     }
 
     // DELETE http://localhost:2019/articles/article/1
-    @DeleteMapping(value = "/article/{id}")
+    @DeleteMapping(value = "/article/{articleid}")
     public ResponseEntity<?> deleteArticleById(
             @PathVariable
                     long articleid, Principal principal)
