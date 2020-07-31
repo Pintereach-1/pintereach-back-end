@@ -76,30 +76,21 @@ public class CategoryServiceImpl
     */
         return categoryrepos.save(category);
     }
-/*
+
     @Transactional
     @Override
     public Category update(Category category,
-                       long id)
+                       long id, User user)
     {
-        Category currentCategory = findCategoryById(id);
-        if (category.getCategoryName() !=null)
-        {
-            throw new ResourceFoundException("Category not updated.");
-        }
 
-        if (category.getCategoryName() != null)
-        {
-            currentCategory.setCategoryName(category.getCategoryName());
-        }
+        Category currentCategory = findByCategoryIdAndUser(id, user);
+        currentCategory.setCategoryName(category.getCategoryName());
 
-        if (category.getUser() != null)
-        {
-            currentCategory.setUser(category.getUser());
-        }
+
         return categoryrepos.save(currentCategory);
+
     }
-*/
+
     @Transactional
     @Override
     public void deleteAll()

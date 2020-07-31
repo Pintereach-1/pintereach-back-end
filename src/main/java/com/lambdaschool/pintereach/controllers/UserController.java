@@ -155,7 +155,7 @@ public class UserController
                     long userid)
     {
         updateUser.setUserId(userid);
-        userService.save(updateUser);
+        userService.update(updateUser, userid);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

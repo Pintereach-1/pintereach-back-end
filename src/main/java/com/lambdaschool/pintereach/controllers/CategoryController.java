@@ -93,7 +93,7 @@ public class CategoryController
 
         updateCategory.setUser(user);
         updateCategory.setCategoryid(categoryid);
-        categoryService.save(updateCategory);
+        categoryService.update(updateCategory, categoryid, user);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
