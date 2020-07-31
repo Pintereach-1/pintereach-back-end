@@ -84,7 +84,7 @@ public class CategoryControllerIntegrationTest {
     }
 
 
-
+/*
     //    GET /restaurants/restaurant/name/{name}
     @Test
     public void givenFoundArticleName() throws
@@ -99,7 +99,7 @@ public class CategoryControllerIntegrationTest {
                 .body(containsString("Apple"));
     }
 
- /*
+
     //    GET /restaurants/restaurants
     @Test
     public void givenFindAllArticles() {
@@ -112,7 +112,7 @@ public class CategoryControllerIntegrationTest {
     }
 
 
-    //    PUT /restaurants/restaurant/{restaurantid}
+    //    PUT /categories/category/{categoryid}
    /* @Test
     public void givenUpdateAnArticle() throws
             Exception {
